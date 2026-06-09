@@ -1,21 +1,22 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday, Nami 🎀</title>
-    <!-- Importing Google Fonts for that dreamy, elegant look -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- CSS STYLES --- */
         :root {
             --hot-pink: #FF69B4;
             --soft-pink: #FFB7B2;
             --pastel-pink: #FFE5E5;
-            --white: #FFFFFF;
+            --bg-gradient: radial-gradient(circle at top center, #fff0f5, #ffdae9);
             --text-color: #D6336C;
-            --bg-gradient: radial-gradient(circle at center, #fff0f5, #ffc0cb);
+            --white: #ffffff;
         }
 
         * {
@@ -29,178 +30,165 @@
             background: var(--bg-gradient);
             color: var(--text-color);
             min-height: 100vh;
+            width: 100%;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
+            position: relative;
         }
 
-        /* Floating Background Elements */
-        .background-decor {
+        .bg-decor {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 0;
+            z-index: -1;
             overflow: hidden;
+            pointer-events: none;
         }
 
-        .floating-heart {
+        .floating-shape {
             position: absolute;
-            font-size: 20px;
-            color: var(--hot-pink);
-            opacity: 0;
-            animation: floatUp 8s infinite linear;
+            top: -10%;
+            opacity: 0.6;
+            animation: floatUp linear infinite;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
             20% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Main Container */
-        .container {
-            position: relative;
-            z-index: 10;
-            width: 90%;
-            max-width: 500px;
-            padding: 20px;
-            min-height: 60vh;
+        .screen {
+            position: absolute;
+            width: 100%;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 30px 20px;
+            background: transparent;
+            transition: opacity 0.8s ease;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        /* Decorations */
-        .bow {
-            font-size: 3rem;
+        .screen.active {
+            opacity: 1;
+            pointer-events: all;
+            z-index: 2;
+        }
+
+        .title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            text-align: center;
+            color: var(--hot-pink);
+            text-shadow: 2px 2px 0px #fff, 4px 4px 15px rgba(214, 51, 108, 0.2);
             margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .decor-line {
+            color: var(--hot-pink);
+            letter-spacing: 5px;
+            margin: 15px 0;
+        }
+
+        .gift-box {
+            font-size: 4rem;
+            margin-bottom: 20px;
             animation: bounce 2s infinite ease-in-out;
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-15px); }
         }
 
-        .ribbon {
-            font-size: 1.5rem;
-            color: var(--hot-pink);
-            margin: 10px 0;
-        }
-
-        /* Typography */
-        h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 3rem;
-            color: var(--hot-pink);
-            text-shadow: 2px 2px 0px #fff, 4px 4px 10px rgba(214, 51, 108, 0.3);
-            margin-bottom: 10px;
-            line-height: 1.2;
-        }
-
-        h2 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2rem;
-            margin: 20px 0;
-        }
-
-        p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        /* The Letter Card */
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid var(--white);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
-            width: 100%;
-            display: none; /* Hidden initially */
-            opacity: 0;
-            transition: opacity 1s ease-in;
-        }
-
-        .card.visible {
-            display: block;
-        }
-
-        .card.show {
-            opacity: 1;
-        }
-
-        /* Buttons */
-        .btn {
-            background-image: linear-gradient(45deg, var(--hot-pink), #ff85c2);
+        .btn-main {
+            background: linear-gradient(45deg, #FF69B4, #ff85c2);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 15px 40px;
             border-radius: 50px;
             font-family: 'Quicksand', sans-serif;
-            font-weight: bold;
+            font-weight: 600;
             font-size: 1.1rem;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.3);
             transition: transform 0.3s, box-shadow 0.3s;
             margin-top: 20px;
-            text-decoration: none;
-            display: inline-block;
         }
 
-        .btn:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6);
+        .btn-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(255, 105, 180, 0.5);
         }
 
-        .btn:active {
-            transform: scale(0.95);
-        }
-
-        /* Music Button */
-        .music-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: white;
-            color: var(--hot-pink);
+        .btn-small {
+            background: transparent;
             border: 2px solid var(--hot-pink);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: var(--hot-pink);
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            margin-top: 30px;
             cursor: pointer;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: all 0.3s;
         }
 
-        .music-btn:hover {
+        .btn-small:hover {
             background: var(--hot-pink);
             color: white;
-            transform: rotate(360deg);
         }
 
-        /* Cursor for Typewriter */
+        .card-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(214, 51, 108, 0.15);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .card-header {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .letter-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            text-align: left;
+            white-space: pre-wrap;
+            min-height: 200px;
+        }
+
         .cursor {
             display: inline-block;
             width: 2px;
             height: 1.2em;
             background-color: var(--hot-pink);
-            margin-left: 2px;
+            margin-left: 4px;
+            vertical-align: text-bottom;
             animation: blink 1s infinite;
-            vertical-align: middle;
         }
 
         @keyframes blink {
@@ -208,61 +196,190 @@
             50% { opacity: 0; }
         }
 
-        /* Utility classes for fading */
-        .fade-in {
-            animation: fadeIn 2s forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Stars */
-        .star {
+        .gratitude-line {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
             color: var(--hot-pink);
+            margin-top: 30px;
         }
 
+        .final-text {
+            font-size: 1.5rem;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .heart-pink {
+            color: var(--hot-pink);
+            font-size: 3rem;
+            margin: 20px 0;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        #musicToggle {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 100;
+            background: white;
+            border: 2px solid var(--hot-pink);
+            color: var(--hot-pink);
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        #musicToggle:hover {
+            background: var(--hot-pink);
+            color: white;
+            transform: rotate(360deg);
+        }
+
+        @media (max-width: 600px) {
+            .title { font-size: 2.8rem; }
+            .subtitle { font-size: 1.2rem; }
+            .card-container { padding: 30px 20px; }
+            .letter-text { font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Background Decoration Container -->
-    <div class="background-decor" id="bg-decor"></div>
+    <div class="bg-decor" id="bgDecor"></div>
 
-    <!-- Audio Element (Placeholder) -->
-    <!-- REPLACE 'your-song.mp3' WITH YOUR ACTUAL FILE NAME -->
-    <audio id="bgm" loop>
-        <source src="your-song.mp3" type="audio/mpeg">
+    <audio id="bgm">
+        <source src="our-song.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Music Toggle Button -->
-    <div class="music-btn" onclick="toggleMusic()" title="Play Our Song 🎵">
-        🎵
+    <button id="musicToggle" onclick="toggleMusic()" aria-label="Play Music">🎵</button>
+
+    <div id="screen-welcome" class="screen active">
+        <div class="gift-box">🎁</div>
+        <div class="decor-line">✦ ✦ ✦</div>
+        <h1 class="title">Happy Birthday, Nami 🎀</h1>
+        <p class="subtitle">To the one who makes every moment magical.</p>
+        <button class="btn-main" onclick="goToLetter()">Open Your Birthday Letter 💌</button>
     </div>
 
-    <!-- Main Content Wrapper -->
-    <div class="container">
+    <div id="screen-letter" class="screen">
+        <div class="card-container">
+            <div class="card-header">My Bebe,</div>
+            <div class="letter-text">
+                <span id="typewriter-content"></span><span class="cursor"></span>
+            </div>
+            <div id="gratitude-msg" class="gratitude-line">
+                Forever grateful for every moment with you ✨
+            </div>
+            <button id="continue-btn" class="btn-small" style="display:none;" onclick="goToFinal()">Continue 💗</button>
+        </div>
+    </div>
+
+    <div id="screen-final" class="screen">
+        <div class="heart-pink">💗</div>
+        <h2 class="title" style="font-size: 2.5rem;">Once again...</h2>
+        <p class="final-text">
+            Happy Birthday, Bebe.<br>
+            I love you endlessly. 💗
+        </p>
+    </div>
+
+    <script>
+        const bgDecor = document.getElementById('bgDecor');
+        const shapes = ['💗', '✨', '⭐', '💖', '🎀'];
         
-        <!-- Screen 1: Welcome -->
-        <div id="welcome-screen">
-            <div class="bow">🎀</div>
-            <h1>Happy Birthday, Nami 🎀</h1>
-            <div class="ribbon">✦ ─ ✦ ─ ✦</div>
-            <p style="color: #D6336C; font-size: 1.2rem;">To the one who makes every moment magical.</p>
-            <button class="btn" onclick="openLetter()">Open Your Birthday Letter 💌</button>
-        </div>
+        function createFloatingShape() {
+            const el = document.createElement('div');
+            el.classList.add('floating-shape');
+            el.innerText = shapes[Math.floor(Math.random() * shapes.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 10 + 10;
+            el.style.animationDuration = duration + 's';
+            bgDecor.appendChild(el);
+            setTimeout(() => { el.remove(); }, duration * 1000);
+        }
 
-        <!-- Screen 2: The Letter -->
-        <div id="letter-screen" class="card">
-            <div class="ribbon">💗</div>
-            <h2>My Bebe,</h2>
-            <div id="typewriter-text" style="text-align: left; min-height: 200px; color: #555;"></div>
-            <span class="cursor"></span>
-        </div>
+        setInterval(createFloatingShape, 2000);
+        createFloatingShape();
 
-        <!-- Screen 3: Final & Gratitude -->
-        <div id="final-screen" class="card" style="border:none; background:none; box-shadow:none; padding:0;">
-            <div style="margin-top: 30px;">
-                <p class="fade-in" style="font-family: 'Dancing Script', cursive; font-size: 1.5rem;">Forever grateful for every moment with you ✨</p>
-                <div class="bow fade-in" style="animation-delay: 0.5s;">
+        const welcomeScreen = document.getElementById('screen-welcome');
+        const letterScreen = document.getElementById('screen-letter');
+        const finalScreen = document.getElementById('screen-final');
+
+        const letterText = `If I could choose any place or any role in this world, I would choose this, right here, as your boyfriend. Aku bersyukur banget bisa ada di posisiku yang sekarang, nemenin bebee.\n\nDi hari spesial bebee ini, aku mau minta maaf ya kalau semisal selama ini masih banyak kurangnya. Maaf kalau aku masih sering bikin bebe sedih karena belum bisa selalu bikin bebe seneng atau selalu happy. Dan maaf klo semisal ada kata-kata aku yang pernah buat bebe sedih atau kecewa. Aku bakal terus belajar buat jadi yang terbaik buat bebee.\n\nBut if there is one thing bebe should know is that I love you so much more than anything in this world. And in any situation, I would keep you as my priorities.\n\nBebe jangan ovt-ovt ya, bebe inget aku sekarang lagi berada di posisi yg aku selalu inginkan dari semester 2 lalu (which is, standing here as your boyfriend) dan gamungkin aku mau (atau bahkan BISA) ngelepas ini.\n\nlafyaw bebe <3`;
+
+        let isTyping = false;
+        let currentText = '';
+
+        function goToLetter() {
+            welcomeScreen.classList.remove('active');
+            letterScreen.classList.add('active');
+            
+            if (!isTyping && currentText.length === 0) {
+                typeWriter();
+            }
+        }
+
+        function typeWriter() {
+            isTyping = true;
+            const contentEl = document.getElementById('typewriter-content');
+            let index = 0;
+            
+            function type() {
+                if (index < letterText.length) {
+                    currentText += letterText.charAt(index);
+                    
+                    if (letterText.charAt(index) === '\n') {
+                        contentEl.innerHTML += '<br>';
+                    } else {
+                        contentEl.innerHTML += letterText.charAt(index);
+                    }
+                    
+                    index++;
+                    setTimeout(type, Math.random() * 30 + 20);
+                } else {
+                    document.getElementById('continue-btn').style.display = 'inline-block';
+                }
+            }
+            type();
+        }
+
+        function goToFinal() {
+            letterScreen.classList.remove('active');
+            finalScreen.classList.add('active');
+        }
+
+        const bgm = document.getElementById('bgm');
+        const musicBtn = document.getElementById('musicToggle');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgm.pause();
+                musicBtn.innerHTML = '🎵';
+                musicBtn.style.background = 'white';
+                musicBtn.style.color = '#FF69B4';
+            } else {
+                bgm.play().catch(e => console.log('Please add your audio file "our-song.mp3" to play music'));
+                musicBtn.innerHTML = '⏸';
+                musicBtn.style.background = '#FF69B4';
+                musicBtn.style.color = 'white';
+            }
+            isPlaying = !isPlaying;
+        }
+
+    </script>
+</body>
+</html>
+```
